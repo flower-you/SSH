@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+  		
+<validators>
+	<field name="username">
+		<field-validator type="requiredstring">
+		<message>用户名不能为空！</message>
+		</field-validator>
+		<field-validator type="regex" short-circuit="true">  
+            <param name="regex">^[\w\d_]{2,10}$</param>  
+            <message>用户名由字母、数字或"_"组成，长度2-10位</message>  
+        </field-validator>
+        <field-validator type="uniqueName">
+        	<message>用户名称已经被占用！</message>
+        </field-validator>
+	</field>
+	
+	<field name="password">
+	  <field-validator type="requiredstring">
+		<message>密码不能为空</message>
+	  </field-validator>
+		<field-validator type="regex" short-circuit="true">  
+            <param name="regex">^[\w\d_@.]{6,16}$</param>  
+            <message>密码长度6-16位！</message>
+         </field-validator>
+         
+         <field-validator type="fieldexpression" short-circuit="true">
+     		<param name="expression"><![CDATA[(#parameters.password[0] == #parameters.repassword[0])]]></param>
+     		<message>密码不一致，请重新输入!</message>
+   		</field-validator>  
+	</field>
+	
+	
+	<field name="age">
+		<field-validator type="int" short-circuit="true">
+			<param name="min">1</param>
+			<param name="max">150</param>
+			<message>年龄必须在1到150之间</message>
+		</field-validator>
+	</field>
+	
+	
+	<field name="phone">
+	<field-validator type="requiredstring" short-circuit="true">
+			<message>电话号码不能为空！</message>
+		</field-validator>
+		<field-validator type="regex" short-circuit="true">
+			<param name="trim">true</param>
+			<!-- ^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$ -->
+			<param name="regex"><![CDATA[^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$]]></param>
+			<message>电话号码不符合规范！</message>
+		</field-validator>
+	</field>
+	
+</validators>

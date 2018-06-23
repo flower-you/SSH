@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.devMode" value="true"/>
+	<package name="default" extends="struts-default" strict-method-invocation="false">
+	
+	<!-- 防止用户不登录直接访问页面的拦截器 -->
+	 <interceptors>
+			<interceptor name="loginInterceptor" class="xaut.wjh.interceptor" />
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor">
+					<param name="excludeMethods">login,loginVerify,userRegist,registInput,queryBook</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="loginInput" class="xaut.wjh.action.UserAction"  method="login">
+			<result name="login">/WEB-INF/content/user/login.jsp</result>
+		</action>
+		<action name="loginVerify" class="xaut.wjh.action.UserAction"  method="loginVerify">
+		   <result name="success">/WEB-INF/content/user/customerCenter.jsp</result>
+		   <result name="failure">/WEB-INF/content/user/login.jsp</result>
+		   <result name="input">/WEB-INF/content/user/login.jsp</result>
+		</action>
+		<action name="userRegist" class="xaut.wjh.action.UserAction"  method="userRegist">
+		   <result name="input">/WEB-INF/content/user/regist.jsp</result>
+		   <result name="success" >/WEB-INF/content/user/registSuccess.jsp</result>
+		</action>
+		<action name="registInput" class="xaut.wjh.action.UserAction"  method="registInput">
+		   <result name="registInput">/WEB-INF/content/user/regist.jsp</result>
+		</action>
+		<action name="queryUser" class="xaut.wjh.action.UserAction"  method="queryUser">
+		   <result name="userMessage">/WEB-INF/content/user/reviseBasic.jsp</result>
+		   
+		</action>
+		<action name="queryAccount" class="xaut.wjh.action.UserAction"  method="queryUserAccount">
+		   <result name="userMessage">/WEB-INF/content/user/reviseAccount.jsp</result>
+		</action>
+		
+		<action name="reviseUser" class="xaut.wjh.action.UserAction"  method="reviseUser">
+			<result name="userCenter">/WEB-INF/content/user/customerCenter.jsp</result>
+		</action>
+		<action name="delUser" class="xaut.wjh.action.UserAction"  method="delUser">
+			<result name="toIndex">index.jsp</result>
+		</action>
+		
+		
+		<action name="toRevisePassword" class="xaut.wjh.action.UserAction"  method="toRevisePassword">
+			<result name="toRevisePassword">/WEB-INF/content/user/revisePassword.jsp</result>
+		</action>
+		
+		<!-- 不写class,会默认在action中搜索actionname的方法，不写resultname会默认为success -->
+		<action name="queryBook" class="xaut.wjh.action.BookAction" method="queryBook">
+			<result name="toBookList">/WEB-INF/content/book/showBookList.jsp</result>
+		</action>
+		
+		<action name="bookDetail" class="xaut.wjh.action.BookAction" method="bookDetail">
+			<result name="showBookDetail">/WEB-INF/content/book/showBookDetail.jsp</result>
+		</action>
+	</package>
+</struts>

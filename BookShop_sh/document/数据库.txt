@@ -1,0 +1,164 @@
+create database book_db;
+use book_db;
+
+-- 用户角色表
+create table t_roles (
+id int primary key auto_increment,
+rolename varchar(20)
+)
+desc t_roles;
+-- 用户表
+create table t_users (
+id int primary key auto_increment,
+username  varchar(20) unique,
+password varchar(16) not null,
+photoName varchar(150),
+sex boolean,
+age int,
+roleId int not null,
+phone VARCHAR(15),-- 电话
+foreign key (roleId) references t_roles(id)
+)
+
+
+-- 图书分类表
+CREATE TABLE t_types(
+id int PRIMARY KEY auto_increment ,
+NAME VARCHAR(50),
+descr VARCHAR(50) -- 分类说明
+)
+
+-- 图书属性表
+CREATE TABLE t_books(
+id int PRIMARY KEY auto_increment,
+NAME VARCHAR(50),
+price FLOAT,-- 原价
+auth  VARCHAR(30), -- 作者
+img VARCHAR(40), -- 图书的图片名称UUID
+rebate NUMERIC(3,2), -- 0.xx保留两位
+stock INT,
+publisher VARCHAR(50), -- 出版社名称
+publishdate DATE, -- 出版日期
+pages INT, -- 页数
+size VARCHAR(10), -- 开本
+printtimes INT, -- 印次
+versions INT, -- 版次
+brief TEXT, -- 内容简介
+content VARCHAR(4000), -- 目录,必须一显示格式良好的HTMl文本保存
+onlinetime DATE  -- 上架时间
+)
+-- drop table books;
+-- 图书分类和图书关系表
+CREATE TABLE t_booktype(
+bookId int,
+typeId int,
+PRIMARY KEY(bookId,typeId),
+FOREIGN KEY (bookId) REFERENCES t_books(id),
+FOREIGN KEY (typeId) REFERENCES t_types(id)
+-- constraint booktype-book foreign key (bookId) REFERENCES t_books(id),
+-- CONSTRAINT booktype-type FOREIGN KEY (typeId) REFERENCES t_types(id)
+)
+alter table t_booktype rename to t_bookType;
+desc t_booktype;
+show tables;
+ALTER table books rename to t_books;
+alter table booktype rename to t_bookType;
+alter table types rename to t_types;
+show tables;
+desc t_roles;
+insert into t_roles(roleName) values('用户'),('商家');
+use book_db;
+desc t_users;
+insert into t_users(username,password,photoName,sex,age,roleId,phone) values('flower','flower',null,false,21,'2',15820872232);
+select *from t_users;
+desc t_books;
+desc t_types;
+insert into t_types(name) values('言情'),('武侠'),('军事'),('政治'),('教育'),('计算机'),('养生'),('科幻');
+select *from t_types;
+Alter table t_types change id id VARCHAR(32) PRIMARY KEY auto_increment;
+drop table t_booktype;
+drop table t_books;
+drop table t_types;
+desc t_books;
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('那个背影',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('java并发编程实战',33,'大牛',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('平民公主的美颜手记',33,'王子墨',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('解忧杂货店',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('三生三世枕上书',33,'唐七',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('花千骨',33,'fresh果果',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('乖，摸摸头',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('嗨，低头族',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-2-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('穿山甲',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-4-11');insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('窗台的花',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('名侦探柯南',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('安徒生童话',33,'大牛',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-2-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('十万个为什么',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-3-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('剑指offer',33,'大牛',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2017-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('知否，知否，应是绿肥红瘦',33,'大牛',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-2-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('Java编程思想',33,'小白',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-3-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('编程之美',33,'大牛',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2017-1-21');
+insert into t_books(name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content,onlinetime)
+values('java程序员面试笔试宝典',33,'大牛',null,0.75,120,'青青文学出版社','2017-1-8',350,'16开',3,3,'鬼马精灵的萝莉girl与耿直学霸boy的校园爱情故事',null,'2018-2-21');
+
+-- 管理员表
+CREATE TABLE admins(
+id VARCHAR(32) PRIMARY KEY,
+NAME VARCHAR(20),
+PASSWORD VARCHAR(50), -- 密码需要进行加密
+sex VARCHAR(5),
+email VARCHAR(30),
+descr VARCHAR(50) -- 管理员描述
+)
+
+-- 用户收货地址列表
+CREATE TABLE address(
+id VARCHAR(32) PRIMARY KEY,
+NAME VARCHAR(20),
+phone VARCHAR(20),
+zip VARCHAR(10), -- 邮编
+dft CHAR(1),-- 1,是, 0,否
+descr VARCHAR(50),
+userid VARCHAR(32) ,
+mktime DATE ,-- 方便按时间倒序排列
+FOREIGN KEY (userid) REFERENCES users(id)
+)
+
+-- 用户订单表
+CREATE TABLE  orders(
+id VARCHAR(32) PRIMARY KEY,-- 订单编号
+userid VARCHAR(32) ,
+consignee VARCHAR(300),-- 收货人的明细信息
+paytype CHAR(1),-- 1,货到付款 2,网上支付
+amt NUMERIC(10,2),-- 订单总金额
+state INT, -- 订单状态,每个数字代表一种状态
+orederdate DATE-- yyyy-MM--dd HH:mm:ss
+)
+
+-- 订单明细
+CREATE TABLE  orderline(
+id VARCHAR(30) PRIMARY KEY,
+orderid VARCHAR(32),-- 所属订单号
+bookid VARCHAR(32) ,-- 图书ID
+amt INT,-- 书的数量
+price FLOAT, -- 价格
+FOREIGN KEY (orderid) REFERENCES orders(id),
+FOREIGN KEY (bookid) REFERENCES books(id)
+)
+use book_db;
+show tables;

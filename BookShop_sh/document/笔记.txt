@@ -1,0 +1,33 @@
+数据效验：
+	针对用户输入的服务器端数据效验文件：
+	例如：UserAction-userRegist-validation必须与action放在同一包中，否则验证失效。
+
+url传递中文参数非法问题
+解决方案
+方案一
+修改tomcat的server.xml
+URIEncoding="UTF-8" 
+useBodyEncodingForURI="true"
+ 修改为 <Connector URIEncoding="UTF-8" connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443" useBodyEncodingForURI="true"/>
+   <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" URIEncoding="UTF-8"/>
+ 方案二，推荐
+ 将要传递的参数加密后再传过去
+ nameUrl=URLEncoder.encode(book.getName(),"UTF-8");
+ request.put("nameUrl",nameurl);
+ jsp页面：
+ <a href="queryBook.action?currentPage=<s:property value="page.currentPage+1"/>&name=<s:property value="#request.nameUrl"/>">下一页</a>
+ 这样防止了参数解析异常，也提高了信息的安全性，比如在地址栏中看到的是经过处理后的字符串，不过还是可以解码哈
+ 方案三
+ 使用url标签生成Url
+<s:url value="queryBook.action" id="u1">
+		<s:param name="currentPage" value="page.currentPage+1"/>
+		<s:param name="name" value="#session.name"/>
+</s:url>
+<a href="%{#u1}">下一页</a>
+
+上传文件
+设置默认头像
+<s:file name="photo"  value="images/defaultPhotos/皮卡丘.jpg"/>
+这个value怎么写？
+ 
+  

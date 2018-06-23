@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="book_db" match-name="t_users"/>
+  <table-filter match-catalog="book_db" match-name="t_roles"/>
+  <table-filter match-catalog="book_db" match-name="t_books"/>
+  <table-filter match-catalog="book_db" match-name="t_booktype"/>
+  <table-filter match-catalog="book_db" match-name="t_types"/>
+</hibernate-reverse-engineering>
